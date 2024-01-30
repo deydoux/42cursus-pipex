@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 01:04:35 by deydoux           #+#    #+#             */
-/*   Updated: 2024/01/30 18:16:34 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/01/30 18:49:15 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/wait.h>
 # include <stdbool.h>
 
+char	*get_bin(char *command, char **path);
 char	**get_path(char **envp);
 
 #endif
