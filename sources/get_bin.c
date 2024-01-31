@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:16:43 by deydoux           #+#    #+#             */
-/*   Updated: 2024/01/31 14:10:38 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/01/31 14:23:35 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*get_bin(char *command, char **path)
 	char	*bin;
 
 	if (ft_strchr(command, '/'))
-		return (command);
+		return (ft_strdup(command));
 	while (*path)
 	{
 		bin = join_path(*path++, command);
