@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:16:43 by deydoux           #+#    #+#             */
-/*   Updated: 2024/01/30 19:06:51 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/01/31 14:10:38 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static char	*join_path(char *path1, char *path2)
 	size_t	size;
 	char	*path;
 
-	ft_printf("Joining \"%s\" and \"%s\"\n", path1, path2);
 	size = ft_strlen(path1) + ft_strlen(path2) + 2;
 	path = malloc(sizeof(char) * size);
 	if (!path)
@@ -32,6 +31,8 @@ char	*get_bin(char *command, char **path)
 {
 	char	*bin;
 
+	if (ft_strchr(command, '/'))
+		return (command);
 	while (*path)
 	{
 		bin = join_path(*path++, command);
