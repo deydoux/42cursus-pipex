@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 11:21:57 by deydoux           #+#    #+#             */
-/*   Updated: 2023/12/11 17:26:01 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/05 16:43:07 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ void	free_split(char **split)
 	size_t	i;
 
 	i = 0;
-	while (split[i])
-		free(split[i++]);
+	if (split)
+		while (split[i])
+			free(split[i++]);
 	free(split);
 }
 
