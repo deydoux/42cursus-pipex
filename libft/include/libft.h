@@ -6,13 +6,14 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 15:09:42 by deydoux           #+#    #+#             */
-/*   Updated: 2024/01/08 18:05:02 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/08 17:08:56 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <limits.h>
+# include <stdbool.h>
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -23,7 +24,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-void	free_split(char **split);
+void	free_nptr(size_t n, void *ptr);
 int		ft_abs(int j);
 int		ft_atoi(const char *nptr);
 void	ft_bzero(void *s, size_t n);

@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   free_nptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/30 01:04:35 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/08 14:20:08 by deydoux          ###   ########.fr       */
+/*   Created: 2024/02/08 16:44:08 by deydoux           #+#    #+#             */
+/*   Updated: 2024/02/08 17:21:51 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
-# include "libft.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <stdio.h>
-# include <string.h>
-# include <sys/wait.h>
+#include "libft.h"
 
-char	*get_bin(char *command, char **path);
-char	**get_path(char **envp);
+void	free_nptr(size_t n, void *ptr)
+{
+	size_t	i;
 
-#endif
+	i = 0;
+	if (n-- > 1 && ptr)
+		while (((void **)ptr)[i])
+			free_nptr(n, ((void **)ptr)[i++]);
+	free(ptr);
+}

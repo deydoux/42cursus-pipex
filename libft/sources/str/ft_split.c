@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 11:21:57 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/05 16:43:07 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/08 17:07:02 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,16 @@ static size_t	split_size(char const *s, char c)
 	return (size);
 }
 
-void	free_split(char **split)
-{
-	size_t	i;
-
-	i = 0;
-	if (split)
-		while (split[i])
-			free(split[i++]);
-	free(split);
-}
-
-static int	create_str(char **split, size_t *i, char const *s, int end)
+static bool	create_str(char **split, size_t *i, char const *s, int end)
 {
 	split[*i] = ft_substr(s, 0, end);
 	if (!split[*i])
 	{
-		free_split(split);
-		return (0);
+		free_nptr(2, split);
+		return (true);
 	}
 	(*i)++;
-	return (1);
+	return (false);
 }
 
 char	**ft_split(char const *s, char c)
@@ -69,7 +58,7 @@ char	**ft_split(char const *s, char c)
 		if (s[s_len++] == c)
 			start = s_len;
 		else if (!s[s_len] || s[s_len] == c)
-			if (!create_str(split, &split_len, s + start, s_len - start))
+			if (create_str(split, &split_len, s + start, s_len - start))
 				return (NULL);
 	}
 	split[split_len] = NULL;
