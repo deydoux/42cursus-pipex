@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   get_paths.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/30 01:04:35 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/09 14:27:18 by deydoux          ###   ########.fr       */
+/*   Created: 2024/01/30 15:10:56 by deydoux           #+#    #+#             */
+/*   Updated: 2024/02/09 14:07:11 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
-# include "libft.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <stdio.h>
-# include <string.h>
-# include <sys/wait.h>
+#include "pipex.h"
 
-typedef struct s_cmd
+char	**get_paths(char **envp)
 {
-	char	*path;
-	char	**argv;
-}			t_cmd;
-
-void	free_cmd(void *ptr);
-char	*get_path(char *arg, char **paths);
-char	**get_paths(char **envp);
-bool	parse_cmds(int argc, char **argv, char **paths, t_list **cmds);
-
-#endif
+	while (*envp && ft_strncmp(*envp, "PATH=", 5))
+		envp++;
+	if (!*envp)
+		return (NULL);
+	return (ft_split(*envp + 5, ':'));
+}

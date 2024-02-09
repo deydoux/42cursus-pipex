@@ -1,7 +1,9 @@
 NAME				=	pipex
 
-SOURCES				=	get_bin.c	\
-						get_path.c	\
+SOURCES				=	free_cmd.c		\
+						get_path.c		\
+						get_paths.c		\
+						parse_cmds.c	\
 						pipex.c
 
 LIBFT_DIR			=	libft
