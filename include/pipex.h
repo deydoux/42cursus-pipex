@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 01:04:35 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/09 14:27:18 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/09 15:10:41 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ typedef struct s_cmd
 }			t_cmd;
 
 void	free_cmd(void *ptr);
-char	*get_path(char *arg, char **paths);
-char	**get_paths(char **envp);
-bool	parse_cmds(int argc, char **argv, char **paths, t_list **cmds);
+bool	parse_cmds(int argc, char **argv, char **envp, t_list **cmds);
 
 #endif

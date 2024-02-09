@@ -6,11 +6,55 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:49:22 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/09 15:00:44 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/09 15:10:36 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+static char	**get_paths(char **envp)
+{
+	while (*envp && ft_strncmp(*envp, "PATH=", 5))
+		envp++;
+	if (!*envp)
+		return (NULL);
+	return (ft_split(*envp + 5, ':'));
+}
+
+static char	*join_path(char *path1, char *path2)
+{
+	size_t	size;
+	char	*path;
+
+	size = ft_strlen(path1) + ft_strlen(path2) + 2;
+	path = malloc(sizeof(char) * size);
+	if (!path)
+		return (NULL);
+	ft_strlcpy(path, path1, size);
+	ft_strlcat(path, "/", size);
+	ft_strlcat(path, path2, size);
+	return (path);
+}
+
+static char	*get_path(char *arg, char **paths)
+{
+	char	*path;
+
+	if (ft_strchr(arg, '/'))
+		return (ft_strdup(arg));
+	if (!paths)
+		return (NULL);
+	while (*paths)
+	{
+		path = join_path(*paths++, arg);
+		if (!path)
+			return (NULL);
+		if (!access(path, F_OK))
+			return (path);
+		free(path);
+	}
+	return (NULL);
+}
 
 static bool	parse_cmd(char *arg, char **paths, t_list **cmds)
 {
@@ -37,13 +81,18 @@ static bool	parse_cmd(char *arg, char **paths, t_list **cmds)
 	return (false);
 }
 
-bool	parse_cmds(int argc, char **argv, char **paths, t_list **cmds)
+bool	parse_cmds(int argc, char **argv, char **envp, t_list **cmds)
 {
+	char	**paths;
 	int		i;
+	bool	error;
 
+	paths = get_paths(envp);
 	i = 0;
-	while (i < argc)
+	error = false;
+	while (i < argc && !error)
 		if (parse_cmd(argv[i++], paths, cmds))
-			return (true);
-	return (false);
+			error = true;
+	free_nptr(2, paths);
+	return (error);
 }
