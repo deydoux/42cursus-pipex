@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:49:22 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/09 15:10:36 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/09 15:19:50 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static bool	parse_cmd(char *arg, char **paths, t_list **cmds)
 		free_cmd(cmd);
 		return (true);
 	}
-	ft_lstadd_back(cmds, new);
+	ft_lstadd_front(cmds, new);
 	return (false);
 }
 
