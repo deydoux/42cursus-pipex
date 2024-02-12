@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 01:04:26 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/11 12:19:54 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/12 07:50:20 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,19 @@ static bool	pipex_test(t_list *cmds, char **envp)
 	{
 		dup2(fd[0], STDIN_FILENO);
 		execve(((t_cmd *)cmds->content)->path, ((t_cmd *)cmds->content)->argv, envp);
+		exit(0);
 	}
-	else
+	cmds = cmds->next;
+	pid[1] = fork();
+	if (pid[1] == -1)
+		return (true);
+	if (!pid[1])
 	{
-		cmds = cmds->next;
-		pid[1] = fork();
-		if (pid[1] == -1)
-			return (true);
-		if (!pid[1])
-		{
-			dup2(fd[1], STDOUT_FILENO);
-			execve(((t_cmd *)cmds->content)->path, ((t_cmd *)cmds->content)->argv, envp);
-		}
-		else
-		{
-			close(fd[0]);
-			close(fd[1]);
-			wait(NULL);
-		}
+		dup2(fd[1], STDOUT_FILENO);
+		execve(((t_cmd *)cmds->content)->path, ((t_cmd *)cmds->content)->argv, envp);
+		exit(0);
 	}
+	wait(NULL);
 	return (false);
 }
 
