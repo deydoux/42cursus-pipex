@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 01:04:26 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/12 14:57:39 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/12 16:26:01 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static bool	pipex_test(t_list *cmds, char **envp)
 	pid_t	pid[2];
 	int		outfile;
 
-	ft_putnbr_fd(outfile_mode, 1);
 	outfile = open("outfile", outfile_flags, outfile_mode);
 	if (pipe(fd) == -1)
 		return (true);
@@ -30,7 +29,7 @@ static bool	pipex_test(t_list *cmds, char **envp)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		close(fd[1]);
-		execve(((t_cmd *)cmds->content)->path, ((t_cmd *)cmds->content)->argv, envp);
+		exec_cmd(cmds->content, envp);
 		exit(1);
 	}
 	cmds = cmds->next;
@@ -43,7 +42,7 @@ static bool	pipex_test(t_list *cmds, char **envp)
 		dup2(outfile, STDOUT_FILENO);
 		close(fd[0]);
 		close(fd[1]);
-		execve(((t_cmd *)cmds->content)->path, ((t_cmd *)cmds->content)->argv, envp);
+		exec_cmd(cmds->content, envp);
 		exit(0);
 	}
 	close(fd[0]);

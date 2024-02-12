@@ -1,6 +1,7 @@
 NAME				=	pipex
 
-SOURCES				=	free_cmd.c		\
+SOURCES				=	exec_cmd.c		\
+						free_cmd.c		\
 						parse_cmds.c	\
 						pipex.c
 
