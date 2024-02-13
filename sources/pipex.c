@@ -6,16 +6,20 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 01:04:26 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/13 17:31:57 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/13 17:34:52 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	close_fds(int *fds)
+static void	free_fds(int *fds)
 {
-	while (*fds != -1)
-		close(*fds++);
+	size_t	i;
+
+	i = 0;
+	while (fds[i] != -1)
+		close(fds[i++]);
+	free(fds);
 }
 
 static bool	init_fds(char *in_file, char *out_file, size_t pipes, int **fds)
@@ -57,13 +61,10 @@ int	main(int argc, char **argv, char **envp)
 	}
 	cmds = NULL;
 	fds = NULL;
-	error = false;
-	if (parse_cmds(argc - 3, argv + 2, envp, &cmds)
-		|| init_fds(argv[1], argv[argc - 1], argc - 4, &fds))
-		error = true;
+	error = parse_cmds(argc - 3, argv + 2, envp, &cmds)
+		|| init_fds(argv[1], argv[argc - 1], argc - 4, &fds);
 	ft_lstclear(&cmds, free_cmd);
-	close_fds(fds);
-	free(fds);
+	free_fds(fds);
 	if (error)
 		perror("pipex");
 	return (error);
