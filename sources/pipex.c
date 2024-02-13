@@ -6,47 +6,11 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 01:04:26 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/13 17:34:52 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/13 19:00:40 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-static void	free_fds(int *fds)
-{
-	size_t	i;
-
-	i = 0;
-	while (fds[i] != -1)
-		close(fds[i++]);
-	free(fds);
-}
-
-static bool	init_fds(char *in_file, char *out_file, size_t pipes, int **fds)
-{
-	size_t	size;
-	size_t	i;
-
-	size = sizeof(int) * ((2 * pipes) + 3);
-	*fds = malloc(size);
-	if (!*fds)
-		return (true);
-	ft_memset(*fds, -1, size);
-	*fds[0] = open(in_file, in_file_flags);
-	if (*fds[0] == -1)
-		return (true);
-	i = 1;
-	while (pipes--)
-	{
-		if (pipe(*fds + i) == -1)
-			return (true);
-		i += 2;
-	}
-	(*fds)[i] = open(out_file, out_file_flags, out_file_mode);
-	if ((*fds)[i] == -1)
-		return (true);
-	return (false);
-}
 
 int	main(int argc, char **argv, char **envp)
 {

@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 01:04:35 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/13 16:02:14 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/13 18:57:58 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ enum
 	out_file_mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
 };
 
-int		exec_cmd(t_cmd *cmd, char **envp);
 void	free_cmd(void *ptr);
+void	free_fds(int *fds);
+bool	init_fds(char *in_file, char *out_file, size_t pipes, int **fds);
 bool	parse_cmds(int argc, char **argv, char **envp, t_list **cmds);
 
 #endif

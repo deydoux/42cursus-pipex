@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   free_fds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/12 16:20:17 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/12 16:21:51 by deydoux          ###   ########.fr       */
+/*   Created: 2024/02/13 18:57:12 by deydoux           #+#    #+#             */
+/*   Updated: 2024/02/13 18:57:38 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	exec_cmd(t_cmd *cmd, char **envp)
+void	free_fds(int *fds)
 {
-	return (execve(cmd->path, cmd->argv, envp));
+	size_t	i;
+
+	i = 0;
+	while (fds[i] != -1)
+		close(fds[i++]);
+	free(fds);
 }
