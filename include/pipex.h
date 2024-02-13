@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 01:04:35 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/12 16:24:11 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/13 16:02:14 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ typedef struct s_cmd
 
 enum
 {
-	infile_flags = O_RDONLY,
-	outfile_flags = O_CREAT | O_WRONLY | O_TRUNC,
-	outfile_mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
+	in_file_flags = O_RDONLY,
+	out_file_flags = O_CREAT | O_WRONLY | O_TRUNC,
+	out_file_mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
 };
 
 int		exec_cmd(t_cmd *cmd, char **envp);
