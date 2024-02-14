@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:49:22 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/14 11:39:34 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/14 13:52:28 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*get_path(char *arg, char **paths)
 		path = join_path(*paths++, arg);
 		if (!path)
 			return (NULL);
-		if (!access(path, F_OK))
+		if (access(path, F_OK) == 0)
 			return (path);
 		free(path);
 	}

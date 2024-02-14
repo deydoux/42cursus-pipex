@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 01:04:26 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/13 19:00:40 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/14 11:53:03 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 	cmds = NULL;
 	fds = NULL;
 	error = parse_cmds(argc - 3, argv + 2, envp, &cmds)
-		|| init_fds(argv[1], argv[argc - 1], argc - 4, &fds);
+		|| init_fds(argc - 1, argv + 1, &fds);
 	ft_lstclear(&cmds, free_cmd);
 	free_fds(fds);
 	if (error)
