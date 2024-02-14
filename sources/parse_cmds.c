@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:49:22 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/09 15:10:36 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/14 11:39:34 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,6 @@ static bool	parse_cmd(char *arg, char **paths, t_list **cmds)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (true);
-	cmd->argv = ft_split(arg, ' ');
-	if (!cmd->argv)
-	{
-		free_cmd(cmd);
-		return (true);
-	}
-	cmd->path = get_path(cmd->argv[0], paths);
 	new = ft_lstnew(cmd);
 	if (!new)
 	{
@@ -78,6 +71,12 @@ static bool	parse_cmd(char *arg, char **paths, t_list **cmds)
 		return (true);
 	}
 	ft_lstadd_back(cmds, new);
+	cmd->argv = ft_split(arg, ' ');
+	if (!cmd->argv)
+		return (true);
+	cmd->path = get_path(cmd->argv[0], paths);
+	if (!cmd->path || access(cmd->path, X_OK) == -1)
+		return (true);
 	return (false);
 }
 
