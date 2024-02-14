@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:49:22 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/14 13:52:28 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/14 14:06:24 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ static bool	parse_cmd(char *arg, char **paths, t_list **cmds)
 	cmd->path = get_path(cmd->argv[0], paths);
 	if (!cmd->path || access(cmd->path, X_OK) == -1)
 		return (true);
+	cmd->pid = -1;
 	return (false);
 }
 
