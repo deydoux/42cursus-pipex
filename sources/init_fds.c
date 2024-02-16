@@ -6,11 +6,20 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:56:24 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/14 13:48:16 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/16 16:53:47 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+static void	swap_pipe(int fd[2])
+{
+	int	tmp;
+
+	tmp = fd[0];
+	fd[0] = fd[1];
+	fd[1] = tmp;
+}
 
 static bool	init_pipes(size_t n, int *fds)
 {
@@ -21,6 +30,7 @@ static bool	init_pipes(size_t n, int *fds)
 	{
 		if (pipe(fds + i) == -1)
 			return (true);
+		swap_pipe(fds + i);
 		i += 2;
 	}
 	return (false);

@@ -1,7 +1,10 @@
 NAME				=	pipex
 
-SOURCES				=	exec_cmd.c		\
+SOURCES				=	close_fds.c		\
+						exec_cmds.c		\
 						free_cmd.c		\
+						get_path.c		\
+						init_fds.c		\
 						parse_cmds.c	\
 						pipex.c
 
