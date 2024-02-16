@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 19:03:35 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/16 17:00:22 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/16 18:04:01 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool	create_child(t_cmd *cmd, int *fds, char **envp)
 		return (false);
 	dup2(fds[0], STDIN_FILENO);
 	dup2(fds[1], STDOUT_FILENO);
-	close_fds(fds, false);
+	close_fds(fds);
 	if (execve(cmd->path, cmd->argv, envp) == -1)
 	{
 		perror("pipex");

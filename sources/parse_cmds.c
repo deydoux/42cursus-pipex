@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:49:22 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/16 14:31:32 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/16 18:05:53 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static bool	parse_cmd(char *command, char **paths, t_list **cmds)
 		return (true);
 	}
 	ft_lstadd_back(cmds, new);
+	cmd->pid = -1;
 	cmd->argv = ft_split(command, ' ');
 	if (!cmd->argv)
 		return (true);
@@ -60,7 +61,6 @@ static bool	parse_cmd(char *command, char **paths, t_list **cmds)
 		command_not_found(command);
 		return (true);
 	}
-	cmd->pid = -1;
 	return (false);
 }
 

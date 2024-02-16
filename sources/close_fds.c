@@ -6,25 +6,20 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:57:12 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/16 17:05:15 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/16 18:03:34 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	close_fds(int *fds, bool parent)
+void	close_fds(int *fds)
 {
-	size_t	i;
-
 	if (!fds)
 		return ;
-	i = 0;
-	while (fds[i] != -1)
+	while (*fds != -1)
 	{
 		if (*fds)
-			close(fds[i]);
-		i++;
+			close(*fds);
+		fds++;
 	}
-	if (parent)
-		free(fds);
 }

@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 01:04:35 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/16 16:58:22 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/16 18:05:58 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 
 typedef struct s_cmd
 {
-	char	*path;
 	char	**argv;
+	char	*path;
 	pid_t	pid;
 }			t_cmd;
 
@@ -33,7 +33,7 @@ enum
 	outfile_mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
 };
 
-void	close_fds(int *fds, bool parent);
+void	close_fds(int *fds);
 bool	exec_cmds(t_list *cmds, int *fds, char **envp);
 void	free_cmd(void *ptr);
 char	*get_path(char *arg, char **paths);
