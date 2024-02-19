@@ -36,6 +36,7 @@ SOURCES				=	ft_printf/ft_printf.c		\
 						lst/ft_lstlast.c			\
 						lst/ft_lstmap.c				\
 						lst/ft_lstnew.c				\
+						lst/ft_lstshift.c			\
 						lst/ft_lstsize.c			\
 						mem/free_nptr.c				\
 						mem/ft_bzero.c				\

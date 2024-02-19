@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_lstshift.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 08:47:08 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/19 13:23:16 by deydoux          ###   ########.fr       */
+/*   Created: 2024/02/19 12:32:22 by deydoux           #+#    #+#             */
+/*   Updated: 2024/02/19 13:22:08 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstshift(t_list **lst, void (*del)(void *))
 {
-	if (!lst)
+	t_list	*next;
+
+	if (!lst || !*lst)
 		return ;
-	while (*lst)
-		ft_lstshift(lst, del);
+	next = (*lst)->next;
+	ft_lstdelone(*lst, del);
+	*lst = next;
 }
