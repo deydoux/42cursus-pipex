@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   close_fds.c                                        :+:      :+:    :+:   */
+/*   parse_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/13 18:57:12 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/16 18:03:34 by deydoux          ###   ########.fr       */
+/*   Created: 2024/02/19 13:53:58 by deydoux           #+#    #+#             */
+/*   Updated: 2024/02/19 14:10:39 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	close_fds(int *fds)
+static bool	open_infile(char *in_path, t_files *files)
 {
-	if (!fds)
-		return ;
-	while (*fds != -1)
-	{
-		if (*fds)
-			close(*fds);
-		fds++;
-	}
+	files->in_fd = open(in_path, infile_flags);
+	return (files->in_fd == -1);
+}
+
+bool	parse_files(char *in_path, char *out_path, t_files *files)
+{
+	if (open_infile(in_path, files))
+		return (true);
+	files->out_path = out_path;
+	return (false);
 }

@@ -6,22 +6,30 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 19:03:35 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/16 18:04:01 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/19 15:51:16 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static bool	create_child(t_cmd *cmd, int *fds, char **envp)
+static bool	open_outfile(t_files files, int *fd)
+{
+	*fd = open(files.out_path, outfile_flags, outfile_mode);
+	return (*fd == -1);
+}
+
+static bool	create_child(t_cmd *cmd, int fd[3], char **envp)
 {
 	cmd->pid = fork();
 	if (cmd->pid == -1)
 		return (true);
 	if (cmd->pid > 0)
 		return (false);
-	dup2(fds[0], STDIN_FILENO);
-	dup2(fds[1], STDOUT_FILENO);
-	close_fds(fds);
+	dup2(fd[0], STDIN_FILENO);
+	dup2(fd[2], STDOUT_FILENO);
+	close(fd[0]);
+	close(fd[1]);
+	close(fd[2]);
 	if (execve(cmd->path, cmd->argv, envp) == -1)
 	{
 		perror("pipex");
@@ -30,18 +38,35 @@ static bool	create_child(t_cmd *cmd, int *fds, char **envp)
 	exit(0);
 }
 
-bool	exec_cmds(t_list *cmds, int *fds, char **envp)
+static void	safe_close(int *fd)
 {
-	while (cmds)
+	if (*fd == -1)
+		return ;
+	close(*fd);
+	*fd = -1;
+}
+
+bool	exec_cmds(t_list *cmds, char **envp, t_files files)
+{
+	bool	error;
+	int		fd[3];
+
+	error = false;
+	fd[0] = files.in_fd;
+	ft_memset(fd + 1, -1, sizeof(int) * 2);
+	while (cmds && !error)
 	{
-		if (create_child(cmds->content, fds, envp))
-			return (true);
-		close(fds[0]);
-		fds[0] = 0;
-		close(fds[1]);
-		fds[1] = 0;
-		*fds += 2;
+		if (cmds->next)
+			error = pipe(&fd[1]) == -1;
+		else
+			error = open_outfile(files, &fd[2]);
+		if (!error)
+			error = create_child(cmds->content, fd, envp);
+		safe_close(&fd[0]);
+		safe_close(&fd[2]);
+		fd[0] = fd[1];
 		cmds = cmds->next;
 	}
-	return (false);
+	safe_close(&fd[0]);
+	return (error);
 }

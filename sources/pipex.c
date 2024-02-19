@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 01:04:26 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/16 18:02:24 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/19 15:09:19 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_list	*cmds;
-	int		*fds;
+	t_files	files;
 	bool	error;
 
 	if (argc < 5)
@@ -24,11 +24,9 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	cmds = NULL;
-	fds = NULL;
-	error = parse_cmds(argc - 3, argv + 2, envp, &cmds)
-		|| init_fds(argc - 1, argv + 1, &fds) || exec_cmds(cmds, fds, envp);
-	close_fds(fds);
-	free(fds);
+	error = parse_files(argv[1], argv[argc - 1], &files)
+		|| parse_cmds(argc - 3, argv + 2, envp, &cmds)
+		|| exec_cmds(cmds, envp, files);
 	ft_lstclear(&cmds, free_cmd);
 	if (error && errno)
 		perror("pipex");

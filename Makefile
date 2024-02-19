@@ -1,11 +1,10 @@
 NAME				=	pipex
 
-SOURCES				=	close_fds.c		\
-						exec_cmds.c		\
+SOURCES				=	exec_cmds.c		\
 						free_cmd.c		\
 						get_path.c		\
-						init_fds.c		\
 						parse_cmds.c	\
+						parse_files.c	\
 						pipex.c
 
 LIBFT_DIR			=	libft
