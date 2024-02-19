@@ -6,16 +6,19 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:53:58 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/19 17:26:43 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/19 18:13:45 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	*read_doc_line(void)
+static bool	read_doc_line(char **line)
 {
+	if (*line)
+		free(*line);
 	ft_putstr_fd("heredoc> ", STDOUT_FILENO);
-	return (get_next_line(STDIN_FILENO));
+	*line = get_next_line(STDIN_FILENO);
+	return (*line != NULL);
 }
 
 static bool	read_doc(char *limiter, int *in_fd)
@@ -28,16 +31,15 @@ static bool	read_doc(char *limiter, int *in_fd)
 	if (!nl_limiter || pipe(fd) == -1)
 		return (true);
 	*in_fd = fd[0];
-	line = read_doc_line();
-	while (line)
+	line = NULL;
+	while (read_doc_line(&line))
 	{
 		if (ft_strcmp(line, nl_limiter) == 0)
 			break ;
 		ft_putstr_fd(line, fd[1]);
-		free(line);
-		line = read_doc_line();
 	}
 	free(line);
+	free(nl_limiter);
 	close(fd[1]);
 	if (!line)
 	{
