@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:53:58 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/20 02:50:35 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/20 02:57:29 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,16 @@ static bool	read_doc(char *limiter, int *in_fd)
 	return (false);
 }
 
-bool	parse_files(char **argv, char *out_path, t_files *files)
+bool	parse_files(int *argc, char ***argv, t_files *files)
 {
 	char	*limiter;
 
-	files->here_doc = ft_strcmp(argv[0], "here_doc") == 0;
-	files->out_path = out_path;
+	files->here_doc = ft_strcmp((*argv)[1], "here_doc") == 0;
+	files->out_path = (*argv)[*argc - 1];
 	files->out_flags = outfile_flags;
 	if (files->here_doc)
 	{
-		limiter = ft_strjoin(argv[1], "\n");
+		limiter = ft_strjoin((*argv)[2], "\n");
 		if (read_doc(limiter, &files->in_fd))
 			files->in_fd = -1;
 		free(limiter);
@@ -63,8 +63,10 @@ bool	parse_files(char **argv, char *out_path, t_files *files)
 	}
 	else
 	{
-		files->in_fd = open(argv[0], infile_flags);
+		files->in_fd = open((*argv)[1], infile_flags);
 		files->out_flags |= O_TRUNC;
 	}
+	*argc -= 3 + files->here_doc;
+	*argv += 2 + files->here_doc;
 	return (files->in_fd == -1);
 }

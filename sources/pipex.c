@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 01:04:26 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/19 17:27:58 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/20 02:53:04 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	cmds = NULL;
-	error = parse_files(argv + 1, argv[argc - 1], &files)
-		|| parse_cmds(argc - 3 - files.here_doc, argv + 2 + files.here_doc,
-			envp, &cmds)
+	error = parse_files(&argc, &argv, &files)
+		|| parse_cmds(argc, argv, envp, &cmds)
 		|| exec_cmds(cmds, envp, files);
 	ft_lstclear(&cmds, free_cmd);
 	if (error && errno)
