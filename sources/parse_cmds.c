@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 11:49:22 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/20 14:41:06 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/20 15:27:10 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static bool	parse_cmd(char *command, char **paths, t_list **cmds)
 	cmd->path = get_path(cmd->argv[0], paths);
 	if (!cmd->path)
 	{
-		ft_putstr_fd("pipex: Command not found", STDERR_FILENO);
+		ft_putstr_fd("pipex: Command not found\n", STDERR_FILENO);
+		errno = 0;
 		return (true);
 	}
 	return (false);
