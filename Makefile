@@ -25,6 +25,7 @@ OBJECTS				=	$(addprefix $(OBJECTS_DIR)/,$(SOURCES:.c=.o))
 DEPENDENCIES		=	$(OBJECTS:.o=.d)
 
 all					:	$(NAME)
+bonus				:	$(NAME)
 
 -include 				$(DEPENDENCIES)
 
