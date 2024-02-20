@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:53:58 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/20 15:15:53 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/20 15:25:13 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,13 @@ static void	read_doc(char *limiter, int *in_fd)
 	}
 	free(line);
 	close(fd[1]);
-	if (!line && errno)
-		safe_close(in_fd);
+	if (!line)
+	{
+		if (errno)
+			safe_close(in_fd);
+		else
+			ft_putchar_fd('\n', STDOUT_FILENO);
+	}
 }
 
 bool	parse_files(int *argc, char ***argv, t_files *files)
