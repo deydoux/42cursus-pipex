@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:53:58 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/19 18:13:45 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/20 02:50:35 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,20 @@ static bool	read_doc_line(char **line)
 
 static bool	read_doc(char *limiter, int *in_fd)
 {
-	char	*nl_limiter;
 	int		fd[2];
 	char	*line;
 
-	nl_limiter = ft_strjoin(limiter, "\n");
-	if (!nl_limiter || pipe(fd) == -1)
+	if (!limiter || pipe(fd) == -1)
 		return (true);
 	*in_fd = fd[0];
 	line = NULL;
 	while (read_doc_line(&line))
 	{
-		if (ft_strcmp(line, nl_limiter) == 0)
+		if (ft_strcmp(line, limiter) == 0)
 			break ;
 		ft_putstr_fd(line, fd[1]);
 	}
 	free(line);
-	free(nl_limiter);
 	close(fd[1]);
 	if (!line)
 	{
@@ -51,21 +48,23 @@ static bool	read_doc(char *limiter, int *in_fd)
 
 bool	parse_files(char **argv, char *out_path, t_files *files)
 {
+	char	*limiter;
+
+	files->here_doc = ft_strcmp(argv[0], "here_doc") == 0;
 	files->out_path = out_path;
 	files->out_flags = outfile_flags;
-	files->here_doc = ft_strcmp(argv[0], "here_doc") == 0;
 	if (files->here_doc)
 	{
-		if (read_doc(argv[1], &files->in_fd))
-			return (true);
+		limiter = ft_strjoin(argv[1], "\n");
+		if (read_doc(limiter, &files->in_fd))
+			files->in_fd = -1;
+		free(limiter);
 		files->out_flags |= O_APPEND;
 	}
 	else
 	{
 		files->in_fd = open(argv[0], infile_flags);
-		if (files->in_fd == -1)
-			return (true);
 		files->out_flags |= O_TRUNC;
 	}
-	return (false);
+	return (files->in_fd == -1);
 }
