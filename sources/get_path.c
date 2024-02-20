@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 13:41:26 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/16 13:45:07 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/20 13:59:02 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	*get_path(char *command, char **paths)
 {
 	char	*path;
 
+	if (!command)
+		return (NULL);
 	if (ft_strchr(command, '/'))
 		return (ft_strdup(command));
 	if (!paths)
