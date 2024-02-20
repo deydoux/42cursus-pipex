@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 01:04:35 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/20 15:06:53 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/20 15:51:07 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # include <string.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
+
+# ifndef BONUS
+#  define BONUS false
+# endif
 
 typedef struct s_cmd
 {

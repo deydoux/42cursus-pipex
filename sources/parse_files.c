@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:53:58 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/20 15:25:13 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/20 15:52:38 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ bool	parse_files(int *argc, char ***argv, t_files *files)
 	bool	here_doc;
 	char	*limiter;
 
-	here_doc = ft_strcmp((*argv)[1], "here_doc") == 0;
+	here_doc = BONUS && ft_strcmp((*argv)[1], "here_doc") == 0;
 	files->out_path = (*argv)[(*argc) - 1];
 	if (here_doc)
 	{
