@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 19:03:35 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/19 16:39:26 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/20 14:44:33 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,6 @@ static bool	create_child(t_cmd *cmd, int fd[3], char **envp)
 		exit(1);
 	}
 	exit(0);
-}
-
-static void	safe_close(int *fd)
-{
-	if (*fd == -1)
-		return ;
-	close(*fd);
-	*fd = -1;
 }
 
 bool	exec_cmds(t_list *cmds, char **envp, t_files files)

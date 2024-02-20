@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 01:04:35 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/20 02:53:54 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/20 14:44:51 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ void	free_cmd(void *ptr);
 char	*get_path(char *arg, char **paths);
 bool	parse_cmds(int argc, char **argv, char **envp, t_list **cmds);
 bool	parse_files(int *argc, char ***argv, t_files *files);
+void	safe_close(int *fd);
 
 #endif

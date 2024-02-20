@@ -5,7 +5,8 @@ SOURCES				=	exec_cmds.c		\
 						get_path.c		\
 						parse_cmds.c	\
 						parse_files.c	\
-						pipex.c
+						pipex.c			\
+						safe_close.c
 
 LIBFT_DIR			=	libft
 SOURCES_DIR			=	sources

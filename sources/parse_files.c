@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:53:58 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/20 02:57:29 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/20 14:49:54 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static bool	read_doc_line(char **line)
 {
 	if (*line)
 		free(*line);
-	ft_putstr_fd("heredoc> ", STDOUT_FILENO);
+	ft_putstr_fd("> ", STDOUT_FILENO);
 	*line = get_next_line(STDIN_FILENO);
 	return (*line != NULL);
 }
@@ -26,6 +26,7 @@ static bool	read_doc(char *limiter, int *in_fd)
 	int		fd[2];
 	char	*line;
 
+	errno = 0;
 	if (!limiter || pipe(fd) == -1)
 		return (true);
 	*in_fd = fd[0];
@@ -38,12 +39,7 @@ static bool	read_doc(char *limiter, int *in_fd)
 	}
 	free(line);
 	close(fd[1]);
-	if (!line)
-	{
-		close(*in_fd);
-		return (true);
-	}
-	return (false);
+	return (!line && errno);
 }
 
 bool	parse_files(int *argc, char ***argv, t_files *files)
@@ -51,13 +47,14 @@ bool	parse_files(int *argc, char ***argv, t_files *files)
 	char	*limiter;
 
 	files->here_doc = ft_strcmp((*argv)[1], "here_doc") == 0;
+	files->in_fd = -1;
 	files->out_path = (*argv)[*argc - 1];
 	files->out_flags = outfile_flags;
 	if (files->here_doc)
 	{
 		limiter = ft_strjoin((*argv)[2], "\n");
 		if (read_doc(limiter, &files->in_fd))
-			files->in_fd = -1;
+			safe_close(&files->in_fd);
 		free(limiter);
 		files->out_flags |= O_APPEND;
 	}
