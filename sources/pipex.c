@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 01:04:26 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/20 02:53:04 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/20 15:15:43 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc < 5)
 	{
-		ft_putstr_fd("pipex: Too few arguments\n", 2);
+		ft_putstr_fd("pipex: Too few arguments\n", STDERR_FILENO);
 		return (1);
 	}
 	cmds = NULL;

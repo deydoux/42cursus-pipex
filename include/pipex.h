@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 01:04:35 by deydoux           #+#    #+#             */
-/*   Updated: 2024/02/20 14:44:51 by deydoux          ###   ########.fr       */
+/*   Updated: 2024/02/20 15:06:53 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ typedef struct s_cmd
 
 typedef struct s_files
 {
-	bool	here_doc;
 	int		in_fd;
 	char	*out_path;
 	int		out_flags;
